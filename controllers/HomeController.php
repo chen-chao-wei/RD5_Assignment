@@ -60,7 +60,7 @@ class HomeController extends Controller
         $user = $this->model("Users");
         
         //註冊動作
-        if ($_POST['account'] && $_POST['password'] && $_POST['personID']) {
+        if (isset($_POST['account'] , $_POST['password'] , $_POST['personID'])) {
             $userName = $_POST['account'];
             $userPass = $_POST['password'];
             $userID = $_POST['personID'];
@@ -76,7 +76,7 @@ class HomeController extends Controller
                 exit();
             }
         }//登入動作
-        elseif ($_POST['account'] && $_POST['password']&& !$_POST['personID']) {
+        elseif (isset($_POST['account'] , $_POST['password']) && isset($_POST['personID'])==false) {
             $userName = $_POST['account'];
             $userPass = $_POST['password'];
             if ($user->loginVerify($userName, $userPass)) {                
@@ -86,7 +86,8 @@ class HomeController extends Controller
                 }                
                 $this->Redirect("hello",$user);
                 exit();
-            } else {                
+            } else {          
+                echo '<script>alert("帳號或密碼錯誤")</script>';      
                 $user->flag = false;
                 $this->view("Home/login", $user);
                 exit();

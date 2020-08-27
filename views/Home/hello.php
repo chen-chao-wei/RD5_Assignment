@@ -25,12 +25,20 @@
             <hr>
     </div>
     <div>
+        <p id="description">請選擇交易操作</p>
         <p id="result"></p>
-        <form id="action" method="post">
-            <input id="amount" type="text">
-            <input  id="withdraw" name="withdraw" class="btn btn-danger" value="提款" />
-            <input  id="deposit" name="deposit" class="btn btn-danger" value="存款" />
-            <input  id="checkRecords" name="checkRecords" class="btn btn-danger" value="查詢明細" />
+        <form id="actionForm" method="post">
+            <!-- <label>請輸入金額</label> -->
+            
+            <!-- <input type="text" onkeyup="var v=this.value||'';v=v.replace(/[^\d]/g,'');v=parseInt(v,10);if(v<100){this.value=100;}"> -->
+            <a id="withdraw"  class="btn btn-danger withdraw" value="提款" >提款</a>
+            <a id="deposit"  class="btn btn-danger deposit" value="存款" >存款</a>
+            <a id="checkRecords"  class="btn btn-danger checkRecords" value="查詢明細" >查詢明細</a>
+            
+            <a id="withdraw"  class="btn btn-danger check" >確認提款</a>
+            <a id="deposit"  class="btn btn-danger check" >確認存款</a>
+            <a id="checkRecords"  class="btn btn-danger check" >查詢明細</a>
+            <a id="all"  class="btn btn-danger all" >回操作選單</a>
         </form>
     </div>
     <script src="../js/jquery.js"></script>
@@ -48,34 +56,82 @@
             }
         }
         $(document).ready(function() {
-            $("#withdraw").click(function() {
+            $(".check").hide(); $(".all").hide();
+            $('.check').on('click',function(){
+                console.log('check');
                 $.ajax({
-                    type: "POST",
-                    url: "/RD5_Assignment/core/Service.php",
-                    dataType: "json",
-                    data: {
-                        actionName: "1",
-                        amount: $("#amount").val()
-                    },
-                    success: function(data) {
-                        if (data.actionName) { //如果後端回傳 json 資料有 nickname
-                            $("#action")[0].reset(); //重設 ID 為 demo 的 form (表單)
-                            $("#result").html(data.sql);
-                            
-                            console.log("succ");
-                        } else { //否則讀取後端回傳 json 資料 errorMsg 顯示錯誤訊息
-                            $("#action")[0].reset(); //重設 ID 為 demo 的 form (表單)
-                            $("#result").html('<font color="#ff0000">' + data.errorMsg + '</font>');
+                        type: "POST",
+                        url: "/RD5_Assignment/core/Service.php",
+                        dataType: "json",
+                        data: {
+                            userName: <?= $data->name ?>,
+                            actionName: $(".check").attr("id"),
+                            amount: $("#amount").val()
+                        },
+                        success: function(data) {
+                            if (data.actionName) { //如果後端回傳 json 資料有 nickname
+                                $("#actionForm")[0].reset(); //重設 ID 為 demo 的 form (表單)
+                                $("#result").html(data.userName + "|" + data.info['actionName'] + "|" + data.info['amount'] + "|" + data.info['status'] + "|" + data.info['accountBalance']);
+
+                                console.log("succ");
+                                console.log(data);
+                            } else { //否則讀取後端回傳 json 資料 errorMsg 顯示錯誤訊息
+                                $("#actionForm")[0].reset(); //重設 ID 為 demo 的 form (表單)
+                                $("#result").html('<font color="#ff0000">' + data.errorMsg + '</font>');
+                            }
+
+                        },
+                        error: function(jqXHR) {
+                            $("#actionForm")[0].reset(); //重設 ID 為 demo 的 form (表單)
+                            $("#result").html('<font color="#ff0000">發生錯誤：' + jqXHR.status + '</font>');
+                            console.log("fail");
                         }
-                        
-                    },
-                    error: function(jqXHR) {
-                        $("#action")[0].reset(); //重設 ID 為 demo 的 form (表單)
-                        $("#result").html('<font color="#ff0000">發生錯誤：' + jqXHR.status + '</font>');
-                        console.log("fail");
-                    }
-                })
+                    })
             })
+            $('.all').on('click',function(){
+                $(".check").hide();
+                $(".all").hide();    
+                
+                $("#amount").hide();
+                $("#result").hide();
+                $(".withdraw").show();
+                $(".deposit").show();
+                $(".checkRecords").show();                
+                $("#description").show();
+
+                $('label').remove(); 
+                $("#amount").remove();
+            })
+            $('.withdraw').on('click',function(){
+                console.log("click");
+                if ( $(".withdraw").attr("value") == "提款") {
+                    $(".check").show();
+                    $(".all").show();
+                    $(".withdraw").hide();
+                    $(".deposit").hide();
+                    $(".checkRecords").hide();
+                    $("#description").hide();
+                    
+                    //onkeyup="value=value.replace(/[^\d]/g,'+')"
+                    $("#actionForm").prepend('<label>請輸入金額</label><input id="amount" type="text" >');
+                    //$("#actionForm").append('<a id="withdraw"  class="btn btn-danger check" >確認提款</a>')                    
+                } 
+            })
+            $('.deposit').on('click',function(){
+                console.log("click");
+                $(".check").show();
+                    $(".all").show();
+                    $(".deposit").hide();
+                    $("#description").hide();
+                    $(".withdraw").hide();
+                    $(".checkRecords").hide();
+                    //onkeyup="value=value.replace(/[^\d]/g,'+')"
+                    $("#actionForm").prepend('<label>請輸入金額</label><input id="amount" type="text" >');  
+                if ( $(".deposit").attr("value") == "存款") {
+                                      
+                } 
+            })
+            
         })
         $("#logout").submit(function(event) {
 
