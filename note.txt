@@ -7,3 +7,6 @@
 - 介面需顯示餘額, 排版可自由發揮 (可增加設定使
 用 * 屏蔽餘額 加分題)
 - 需有第一點列出之功能
+
+CREATE TABLE user (id int NOT NULL PRIMARY KEY AUTO_INCREMENT,deposit int,account varchar(30),PASSWORD varchar(30),personID varchar(30));
+Transaction record

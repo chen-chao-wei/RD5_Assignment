@@ -39,5 +39,13 @@ class DB {
     $this->stmt = null;
     return $result;
   }
+  function update($sql, $cond=null){
+    $result = false;
+    try {      
+      $result = $this->pdo->query($sql);
+    } catch (Exception $ex) { die($ex->getMessage()); }
+    $this->stmt = null;
+    return $result;
+  }
+  
 }
-?>

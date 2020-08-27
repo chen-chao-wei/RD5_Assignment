@@ -4,6 +4,14 @@
     padding: 15px 30px 15px 15px;
     border-left: 5px solid #eee;
 }
+.tab-title{list-style:none;}
+
+
+
+#tab-demo > ul > li{ display:inline-block; vertical-align:top;font-family:'微軟正黑體'; margin:0 -1px -1px 0 ; border:1px solid #BCBCBC; height:50px; line-height:25px; background:#cdcdcd;padding:0 15px;list-style:none; box-sizing:border-box;}
+#tab-demo >  ul > li a{ color:rgb(47, 78, 101); text-decoration:none;}
+#tab-demo > ul > li.active{ border-bottom:1px solid #fff; background:#fff;}
+#tab-demo > ul > li.active a{color:rgb(30, 108, 198);}
 .body-color{
     /* background-color: #a5daf0; */
     background-color: #ffffff;

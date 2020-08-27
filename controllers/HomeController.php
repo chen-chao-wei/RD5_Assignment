@@ -1,44 +1,106 @@
 <?php
-    class HomeController extends Controller{
-        function index(){
-            echo "home page of HomeController";
-        }
-        function hello($name){
-            $user = $this->model("Users");
-            $user->name = $name;
-            $this->view("Home/hello",$user);
-            //echo "Hello! $user->name";
-        }
-        
-        function register(){
-            $user = $this->model("Users");
-            $userName = $_POST['account'];
-            $userPass = password_hash($_POST['password'], PASSWORD_DEFAULT);
-            $userID = $_POST['personID'];
-            $user->register($userName,$userPass,$userID);
-            $this->view("Home/register");
-        }
-        function login(){
-            $user = $this->model("Users");
+session_start();
+// if (isset($_GET["logout"])) {
+//     session_unset();    
+//     $sUserName = "Guest";
+//     //setcookie("userName", "Guest", time() - 3600);
+//     header("Location: login.php");
+//     exit();
+// }
+
+// if (isset($_POST["btnHome"])) {
+//     header("Location: index.php");
+//     exit();
+// }
+
+
+class HomeController extends Controller
+{
+    function index()
+    {
+        echo "home page of HomeController";
+    }
+    function hello()
+    {
+        if (isset($_POST["logout"])) {
             
-            $userName = $_POST['account'];
-            $userPass = $_POST['password'];
-            $this->view("Home/login");
-            if(isset($_POST['account'])){
-                if($user->loginVerify($userName,$userPass)){
-                    $this->Redirect("hello/$userName");                    
-                }
-                else{
-                    $user->flag=false;
-                    $this->view("Home/login",$user->flag);
-                }
-            }
+            $message = $_SESSION["userName"]."您已登出.";
+            echo '<script>alert("需要集點嗎?")</script>';             
+            unset($_SESSION['userName']);
+            //$this->Redirect("login");
+            //setcookie("userName", "Guest", time() - 3600);
+            // header("Location: index.php");
+            // exit();
+        }  
+        if (isset($_SESSION["userName"])) {
+            $sUserName = $_SESSION["userName"];  
+            $user = $this->model("Users");
+            $user->name = $sUserName;        
+            $this->view("Home/hello",$user);            
+            exit();
+        }
+        else{           
             
+            unset($_SESSION['userName']);
+            $this->Redirect("login");
+            echo ("123r");
         }
         
         
+        //echo "Hello! $user->name";
+    }
+
+    function register()
+    {
+        $user = $this->model("Users");
         
     }
-    
-    
-?>
+    function login()
+    {
+        $user = $this->model("Users");
+        
+        //註冊動作
+        if ($_POST['account'] && $_POST['password'] && $_POST['personID']) {
+            $userName = $_POST['account'];
+            $userPass = $_POST['password'];
+            $userID = $_POST['personID'];
+            $userPass = password_hash($_POST['password'], PASSWORD_DEFAULT);
+            if ($user->register($userName, $userPass, $userID)) {
+                echo '<script>alert("註冊成功 請重新登入")</script>';             
+                $this->view("Home/login",$user);
+                exit();
+            } else {                
+                $user->flag = false;                
+                echo '<script>alert("註冊失敗！！ 請重新註冊")</script>';             
+                $this->view("Home/login",$user);
+                exit();
+            }
+        }//登入動作
+        elseif ($_POST['account'] && $_POST['password']&& !$_POST['personID']) {
+            $userName = $_POST['account'];
+            $userPass = $_POST['password'];
+            if ($user->loginVerify($userName, $userPass)) {                
+                $sUserName = $_POST["account"];
+                if (trim($sUserName) != "") {
+                    $_SESSION["userName"] = $sUserName; 
+                }                
+                $this->Redirect("hello",$user);
+                exit();
+            } else {                
+                $user->flag = false;
+                $this->view("Home/login", $user);
+                exit();
+            }
+        } else {
+            
+            $user->flag = true;
+            $this->view("Home/login", $user);
+            exit();
+        }
+              
+        
+       
+        
+
+    }
+}
