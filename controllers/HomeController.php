@@ -25,7 +25,7 @@ class HomeController extends Controller
         if (isset($_POST["logout"])) {
             
             $message = $_SESSION["userName"]."您已登出.";
-            echo '<script>alert("需要集點嗎?")</script>';             
+                        
             unset($_SESSION['userName']);
             //$this->Redirect("login");
             //setcookie("userName", "Guest", time() - 3600);
