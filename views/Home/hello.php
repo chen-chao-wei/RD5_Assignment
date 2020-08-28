@@ -101,12 +101,12 @@
                     url: "/RD5_Assignment/core/Service.php",
                     dataType: "json",
                     data: {
-                        userName: <?= $data->name ?>,
+                        userName: "<?= $data->name ?>",
                         actionName: $("#check").val(),
                         amount: $("#amount").val()
                     },
                     success: function(data) {
-                        if (data.actionName) { //如果後端回傳 json 資料有 nickname
+                        if (data.actionName) { //如果後端回傳 json 資料有 actionName
                             $("#actionForm")[0].reset(); //重設 ID 為 demo 的 form (表單)
                             $("#result").html(data.info['status']);
                             alert(data.info['actionName'] + " $" + data.info['amount'] + " 【" + data.info['status'] + "】");
@@ -186,7 +186,7 @@
                         url: "/RD5_Assignment/core/Service.php",
                         dataType: "json",
                         data: {
-                            userName: <?= $data->name ?>,
+                            userName: "<?= $data->name ?>",
                             actionName: $(".checkRecords").attr("id")
                         },
                         success: function(data) {
