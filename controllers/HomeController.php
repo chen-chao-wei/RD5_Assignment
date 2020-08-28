@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 // if (isset($_GET["logout"])) {
 //     session_unset();    
 //     $sUserName = "Guest";
@@ -82,7 +83,8 @@ class HomeController extends Controller
             if ($user->loginVerify($userName, $userPass)) {                
                 $sUserName = $_POST["account"];
                 if (trim($sUserName) != "") {
-                    $_SESSION["userName"] = $sUserName; 
+                    $_SESSION["userName"] = $sUserName;
+                    
                 }                
                 $this->Redirect("hello",$user);
                 exit();

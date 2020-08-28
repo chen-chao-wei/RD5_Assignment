@@ -13,22 +13,22 @@
 </head>
 
 <body>
-    <div class="container">
+    <div class="container-fluid">
 
         <div class="row">
-            <div class="col-sm-3">
+            <div class="col-sm-4">
                 &nbsp;
             </div>
-            <div class="col-sm-6">
+            <div class="col-sm-4">
                 <img src="/RD5_Assignment/imgs/ray_moore.jpg">
                 <H1>Hello! <?= $data->name ?></H1>
-                <div>                    
-                        <form id="logout" method="post" onsubmit="return checkOut()">
-                            <input type="submit" class="btn btn-danger" value="登出" />
-                            <input type="hidden" name="logout" value="true" />
-                        </form>
-                        </h1>
-                        <hr>
+                <div>
+                    <form id="logout" method="post" onsubmit="return checkOut()">
+                        <input type="submit" class="btn btn-danger" value="登出" />
+                        <input type="hidden" name="logout" value="true" />
+                    </form>
+                    </h1>
+                    <hr>
                 </div>
                 <div>
                     <p id="description">請選擇交易操作</p>
@@ -39,21 +39,99 @@
                         <!-- <input type="text" onkeyup="var v=this.value||'';v=v.replace(/[^\d]/g,'');v=parseInt(v,10);if(v<100){this.value=100;}"> -->
                         <a id="withdraw" class="btn-a btn btn-primary withdraw" value="提款">提款</a>
                         <a id="deposit" class="btn-a btn btn-success deposit" value="存款">存款</a>
-                        <a id="checkRecords" class="btn-a btn btn-info checkRecords" value=1>查詢明細</a>
+                        <a id="checkRecords" href="#tab2" data-toggle="tab" class="btn-a btn btn-info checkRecords" value=1>查詢明細</a>
                     </form>
                     <button id="check" class="btn btn-danger check">確認</button>
                     <button id="all" class="btn btn-info all">回操作選單</button>
                 </div>
-                <div id="transactionInfoTable">
 
-                </div>
             </div>
-            <div class="col-sm-3">
+            <div class="col-sm-4">
                 &nbsp;
             </div>
         </div>
     </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="tabbable" id="tabs-799915">
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#tab1" data-toggle="tab">Section 1</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active show" href="#tab2" data-toggle="tab">Section 2</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab1">
+                            <p>
+                                I'm in Section 1.
+                            </p>
+                            <div class="jumbotron">
+                                <div class="row" style="background-color: white; padding:5%">
+                                    <div class="col-md-4">
+                                        <div class="card">
+                                            <img class="img-thumbnail" alt="Bootstrap Thumbnail First" src="/RD5_Assignment/imgs/ray_moore.jpg" onclick="SetDeposit()"/>
 
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="card">
+                                            <img class="img-thumbnail" alt="Bootstrap Thumbnail Second" src="/RD5_Assignment/imgs/ray_moore.jpg" />
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="card">
+                                            <img class="img-thumbnail" alt="Bootstrap Thumbnail Third" src="/RD5_Assignment/imgs/ray_moore.jpg" />
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <span>&nbsp;</span>
+                                <div class=row style="background-color: white; padding:5%">
+                                    <div class="col-md-4">
+                                        &nbsp;
+                                    </div>
+                                    <div class="col-md-4">
+                                        <img class="img-thumbnail" alt="Bootstrap Thumbnail Second" src="/RD5_Assignment/imgs/ray_moore.jpg" />
+                                        <h2>
+                                            Hello, world!
+                                        </h2>
+                                        <p>
+                                            1
+                                        </p>
+                                        <p>
+                                            2
+                                        </p>
+                                        <p>
+                                            3
+                                        </p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        &nbsp;
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab2">
+                            <p>
+                                Howdy, I'm in Section 2.
+                            </p>
+                            <div id="transactionInfoTable">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
     <script src="../js/jquery.js"></script>
     <script src="../js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../js/jquery.toast.js"></script>
@@ -159,6 +237,20 @@
 
             })
             //存款
+            function SetDeposit(){
+                console.log("click");
+                $("#result").show();
+                $(".check").show();
+                $(".all").show();
+                $(".deposit").hide();
+                $("#description").hide();
+                $(".withdraw").hide();
+                $(".checkRecords").hide();
+                $("#check").val("deposit");
+                //onkeyup="value=value.replace(/[^\d]/g,'+')"
+                $("#actionForm").prepend('<div id = "enterAmount"><label>請輸入存款金額</label><input id="amount" type="text" onkeyup="value=value.replace(/[^\\d]/g,' + "'')" + '"></div>');
+
+            }
             $('.deposit').on('click', function() {
                 console.log("click");
                 $("#result").show();
@@ -176,11 +268,12 @@
             //查看明細
             $('.checkRecords').on('click', function() {
                 console.log("click");
+                
                 $("#result").show();
                 //if($('.checkRecords').attr("value"))
                 console.log("test", $('.checkRecords').attr("value"));
-                if ($('.checkRecords').attr("value")==1) {
-                    $('.checkRecords').attr("value",0);
+                if ($('.checkRecords').attr("value") == 1) {
+                    $('.checkRecords').attr("value", 0);
                     $.ajax({
                         type: "POST",
                         url: "/RD5_Assignment/core/Service.php",
@@ -202,8 +295,8 @@
                             console.log("fail");
                         }
                     })
-                }else{
-                    $('.checkRecords').attr("value",1);
+                } else {
+                    $('.checkRecords').attr("value", 1);
                     $("#transactionInfoTable").empty();
                 }
 
