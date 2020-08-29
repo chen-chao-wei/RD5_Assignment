@@ -92,23 +92,42 @@ function getTransactionInfo($userName,$actionName){
         $sqlCkeckMoney = <<<block
             select {$fieldName[1]},{$fieldName[0]} from {$tableName[0]} WHERE account='$userName';
             block;
-        $accountBalance = $conn->select($sqlCkeckMoney);
+        $user = $conn->select($sqlCkeckMoney);
+        $sqlInsertInfo = <<<block
+                insert into userTransactionInfo (id,account,actionName,amount,status,accountBalance)
+                values({$user[0]['id']},'$info->userName','$info->actionName','$info->amount','$info->status',{$user[0]['money']});
+                block;             
+        $conn->insert($sqlInsertInfo);
         $sqlSelectInfo = <<<block
             SELECT * FROM 	userTransactionInfo WHERE account='$info->userName' order by datatime desc;
             block;
         $result = $conn->select($sqlSelectInfo);
-        $sqlInsertInfo = <<<block
-                insert into userTransactionInfo (id,account,actionName,amount,status,accountBalance)
-                values({$accountBalance[0]['id']},'$info->userName','$info->actionName','$info->amount','$info->status',{$accountBalance[0]['money']});
-                block;             
-        $conn->insert($sqlInsertInfo);
+        
         return $result;
     }catch (\Throwable $th) {
         return $th;
     }
 
 }
+function sendErrorMsg($userName,$actionName,$amount,$errorMsg){
+    try {
+        $conn = new DB();
+        $sqlUserInfo = <<<block
+                select id,account,money from users WHERE account='$userName';
+                block;
+        
+        $user = $conn->select($sqlUserInfo);
+        $sqlInsertInfo = <<<block
+        insert into userTransactionInfo (id,account,actionName,amount,status,accountBalance)
+        values({$user[0]['id']},"{$user[0]['account']}",'$actionName','$amount','$errorMsg',{$user[0]['money']});
+        block; 
+         $conn->insert($sqlInsertInfo);
+    } catch (\Throwable $th) {
+        return $th;
+    }
+   
 
+}
 header('Content-Type: application/json; charset=UTF-8'); //設定資料類型為 json，編碼 utf-8
 if ($_SERVER['REQUEST_METHOD'] == "POST") { //如果是 POST 請求
     @$userName = $_POST["userName"];
@@ -140,8 +159,15 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") { //如果是 POST 請求
     }   
     else {
         //回傳 errorMsg json 資料
+        if($actionName == null){
+            $actionName="無效";
+            $result = sendErrorMsg($userName,$actionName,$amount,"無效交易操作,ERROR CODE:444");
+        }else{
+            $amount=0;
+            $result = sendErrorMsg($userName,$actionName,$amount,"無效交易操作,ERROR CODE:1");
+        }
         echo json_encode(array(
-            'errorMsg' => '請輸入金額！'
+            'errorMsg' => "請輸入金額！"
         ));
     }
 } else {

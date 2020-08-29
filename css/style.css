@@ -12,8 +12,23 @@
 #tab-demo >  ul > li a{ color:rgb(47, 78, 101); text-decoration:none;}
 #tab-demo > ul > li.active{ border-bottom:1px solid #fff; background:#fff;}
 #tab-demo > ul > li.active a{color:rgb(30, 108, 198);}
+#tab-tr-color{background-color: #B94A48;}
+
+.tab-deposit{background-color: #87b8d1;}
+.tab-checkRecord{background-color: #abb9c5;}
+.tab-withdraw{background-color: #FFC408;}
+
+.img-in{box-shadow: 0px 0px 15px #193045 ;}
+#bank-body{background-color: #193045;}
+#bank-navs > h1{color: #FFC408;}
+#tabs {background-color: #193045;}
+#div-img-action div{border-radius:30px;}
+/* #div-img-action > h3 > div > div > div > div > img{border-radius:30px;} */
+#tab-info > thead >tr{background-color: white;}
+.jumbotron{padding:1rem 2rem;}
+/* #tabs > div {background-color: #193045;} */
+/* #FFC408  005CAF*/
 .body-color{
-    /* background-color: #a5daf0; */
     background-color: #ffffff;
 }
 .div-background{    
