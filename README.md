@@ -30,9 +30,9 @@
   - 預設屏蔽存款金額
    ### 整體UI
   ![image](https://github.com/weichen-chungyo/RD5_Assignment/blob/master/viewImages/0830.png)
-   ### 存款操作
+   ### 提款操作
   ![image](https://github.com/weichen-chungyo/RD5_Assignment/blob/master/viewImages/0830(2).png)
-   ### 存款操作(成功)
+   ### 提款操作(成功)
   ![image](https://github.com/weichen-chungyo/RD5_Assignment/blob/master/viewImages/0830(3).png)
    ### 查看交易明細
   ![image](https://github.com/weichen-chungyo/RD5_Assignment/blob/master/viewImages/0830(4).png)
