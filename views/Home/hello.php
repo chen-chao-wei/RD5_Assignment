@@ -10,22 +10,22 @@
     <link href="/RD5_Assignment/css/bootstrap.min.css" rel="stylesheet">
     <link href="/RD5_Assignment/css/jquery.toast.css" rel="stylesheet">
     <link href="/RD5_Assignment/css/style.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <title>Lab</title>
 </head>
 
 <body>
     <div class="container-fluid">
-       
+
         <div class="row ">
             <div class="col-md-12" id="bank-body">
-                <div class="row">
-                    
-                    <div class="col pull-right" id = "bank-navs">
-                        <h1>Hello! <?= $data->name ?></h1>
+                <div class="row align-items-center">
+                    <div class="col" id="bank-navs">                        
                         <form id="logout" method="post" onsubmit="return checkOut()">
-                            <input type="submit" class="btn btn-danger" value="登出" />
+                            <input type="submit" class="pull-right btn btn-danger" style="margin: 2%;" value="登出" />
                             <input type="hidden" name="logout" value="true" />
                         </form>
+                        <h1 class="pull-right">Hello! <?= $data->name ?></h1>
                     </div>
                 </div>
                 <hr>
@@ -35,10 +35,10 @@
     <div class="container-fluid">
         <div class="row">
             <div id="tabs" class="col-md-12">
-                <div >
+                <div>
                     <!-------------------- nav START ------------------------>
-                    <ul class="nav nav-tabs">
-                        <li id="pre" class="nav-item active">
+                    <ul id="headerUl" class="nav nav-tabs">
+                        <li class="nav-item active">
                             <a class="nav-link active show" href="#tab1" data-toggle="tab">帳戶</a>
                         </li>
                         <li class="nav-item">
@@ -50,53 +50,83 @@
                         <!-------------------- TAB1 START ------------------------>
                         <div class="tab-pane active text-center" id="tab1">
                             <div id="div-img-action" class="jumbotron ">
-                                <h3 id="description">請選擇交易操作</h3>
-                                <div class="row align-items-center  text-center"></div>
-                                <div class="row" style="background-color: white; padding:5% " >
-                                    <div class="col-md-4">
-                                        <div class="card">
-                                            <img class="img-thumbnail" href="#modal-container-transaction" data-toggle="modal" alt="Bootstrap Thumbnail First" src="/RD5_Assignment/imgs/bank/atm.png" onclick="setWithdraw()" />
-
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="card">
-                                            <img class="img-thumbnail" href="#modal-container-transaction" data-toggle="modal" alt="Bootstrap Thumbnail Second" src="/RD5_Assignment/imgs/bank/money-bag.png" onclick="setDeposit()" />
-
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="card">
-                                            <img class="img-thumbnail" alt="Bootstrap Thumbnail Third" data-toggle="modal" src="/RD5_Assignment/imgs/bank/investing-cheque.png" />
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class=row>&nbsp;&nbsp;</div>
-                                <div class=row style="background-color: white; padding:5%">
-                                    <div class="col-md-4">
+                                <div class="row align-items-center" style="background-color: white; padding:5%">
+                                    <!-- <div class="col-md-4">
                                         &nbsp;
-                                    </div>
-                                    <div class="col-md-4">
+                                    </div> -->
+                                    <div id="userInfo" class="col-md-4">
+                                        <div id="showMoney" style="color: #193045; font-weight:bold">
+                                            <h2><span class="fa fa-eye">存款</span></h2>
+                                        </div>
                                         <img class="img-fluid rounded " alt="Bootstrap Thumbnail Second" src="\RD5_Assignment\imgs\bank\bank.png" />
-                                        <h2>
-                                            Hello, world!
-                                        </h2>
-                                        <p>
-                                            1
-                                        </p>
-                                        <p>
-                                            2
-                                        </p>
-                                        <p>
-                                            3
-                                        </p>
+
                                     </div>
-                                    <div class="col-md-4">
-                                        &nbsp;
+                                    <div id=rate class="col-md-8 ">
+                                        <div id="rate-header" class="container-fluid ">
+                                            <div id="rateTitle">
+                                                <label>匯率</label>
+                                            </div>
+                                        </div>
+                                        <div id="rate-body" class="row justify-content-around">
+                                            <div id="rate-header">
+                                                <label>買進</label>
+                                            </div>
+                                            <div id="USD-buy"><label>美金: --</label></div>
+                                            <div id="JPY-buy"><label>日幣: --</label></div>
+                                            <div id="CNY-buy"><label>人民幣: --</label></div>
+                                        </div>
+                                        <div id="rate-body" class="row justify-content-around">
+                                            <div id="rate-header">
+                                                <label>賣出</label>
+                                            </div>
+                                            <div id="USD-sell"><label>美金: -----</label></div>
+                                            <div id="JPY-sell"><label>日幣: -----</label></div>
+                                            <div id="CNY-sell"><label>人民幣: -----</label></div>
+                                        </div>
+                                        <div id="rate-footer" class="container-fluid ">
+                                            <div id="rateTitle">
+                                                <span class="fa fa-clock-o"></span>
+                                                <label id="UTC"></label>
+                                            </div>
+                                        </div>
+
                                     </div>
 
                                 </div>
+
+                                <div>&nbsp;</div>
+                                <div class="row" style="background-color: white; padding:5% ">
+                                    <div class="row container" style="margin:auto">
+                                        <div id="description" class="col-md-12 text-center">
+                                            <h3>選擇操作</h3>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div id="action-title" class="card-body" href="#modal-container-transaction" data-toggle="modal" onclick="setWithdraw()">
+                                                <h5>提款</h5>
+                                            </div>
+                                            <img class="img-thumbnail" href="#modal-container-transaction" data-toggle="modal" alt="Bootstrap Thumbnail First" src="/RD5_Assignment/imgs/bank/atm.png" onclick="setWithdraw()" />
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div id="action-title" class="card-body" href="#modal-container-transaction" data-toggle="modal" onclick="setDeposit()">
+                                                <h5>存款</h5>
+                                            </div>
+                                            <img class="img-thumbnail" href="#modal-container-transaction" data-toggle="modal" alt="Bootstrap Thumbnail Second" src="/RD5_Assignment/imgs/bank/money-bag.png" onclick="setDeposit()" />
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div id="action-title" class="card-body" onclick="nextTab()">
+                                                <h5>查詢明細</h5>
+                                            </div>
+                                            <img class="img-thumbnail" alt="Bootstrap Thumbnail Third" data-toggle="modal" src="/RD5_Assignment/imgs/bank/investing-cheque.png" onclick="nextTab()" />
+
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">&nbsp;&nbsp;</div>
+
 
                             </div>
                         </div>
@@ -104,7 +134,7 @@
                         <!-------------------- TAB2 START ------------------------>
                         <div class="tab-pane" id="tab2">
 
-                            <div id="transactionInfoTable">
+                            <div id="transactionInfoTable" class="row" style=" background-color: #193045; padding:5% ;border-radius:30px; ">
 
                             </div>
                         </div>
@@ -114,7 +144,7 @@
             </div>
         </div>
     </div>
-    
+
     <!-------------------- MODAL START ------------------------>
     <div class="modal fade" id="modal-container-transaction" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -218,12 +248,12 @@
             //查詢明細
             $("#checkRecords").on('click', function() {
                 console.log("click");
-
+                $("#transactionInfoTable").empty();
                 $("#result").show();
                 //if($('.checkRecords').attr("value"))
                 $.ajax({
                     type: "POST",
-                    url: "/RD5_Assignment/core/Service.php",
+                    url: "/RD5_Assignment/core/getUserInfo.php",
                     dataType: "json",
                     data: {
                         userName: "<?= $data->name ?>",
@@ -243,33 +273,32 @@
                         console.log("fail");
                     }
                 })
-                if ($('.checkRecords').attr("value") == 1) {
-                    $('.checkRecords').attr("value", 0);
-                    $.ajax({
-                        type: "POST",
-                        url: "/RD5_Assignment/core/Service.php",
-                        dataType: "json",
-                        data: {
-                            userName: "<?= $data->name ?>",
-                            actionName: $(".checkRecords").attr("id")
-                        },
-                        success: function(data) {
-                            if (data.TransactionInfo) {
-                                console.log(data.TransactionInfo);
-                                doTable(data.TransactionInfo);
-                            }
-
-                        },
-                        error: function(jqXHR) {
-                            $("#actionForm")[0].reset(); //重設 ID 為 demo 的 form (表單)
-                            $("#result").html('<font color="#ff0000">發生錯誤：' + jqXHR.status + '</font>');
-                            console.log("fail");
-                        }
-                    })
-                } else {
-                    $('.checkRecords').attr("value", 1);
-                    $("#transactionInfoTable").empty();
-                }
+                // if ($('.checkRecords').attr("value") == 1) {
+                //     $('.checkRecords').attr("value", 0);
+                //     $.ajax({
+                //         type: "POST",
+                //         url: "/RD5_Assignment/core/Service.php",
+                //         dataType: "json",
+                //         data: {
+                //             userName: "<?= $data->name ?>",
+                //             actionName: $(".checkRecords").attr("id")
+                //         },
+                //         success: function(data) {
+                //             if (data.TransactionInfo) {
+                //                 console.log(data.TransactionInfo);
+                //                 doTable(data.TransactionInfo);
+                //             }
+                //         },
+                //         error: function(jqXHR) {
+                //             $("#actionForm")[0].reset();
+                //             $("#result").html('<font color="#ff0000">發生錯誤：' + jqXHR.status + '</font>');
+                //             console.log("fail");
+                //         }
+                //     })
+                // } else {
+                //     $('.checkRecords').attr("value", 1);
+                //     $("#transactionInfoTable").empty();
+                // }
 
 
             });
@@ -289,7 +318,6 @@
             //完成-結束操作
             actionComplete = function() {
                 $('#modal-container-transaction').modal('hide')
-                //$("#modal-close").trigger("click");
                 $("#amount").val(null);
                 $("#amount").attr("disabled", false);
                 $(".progress-bar").width(1);
@@ -368,50 +396,82 @@
                 $("#check").val("deposit");
                 console.log("setDeposit");
             }
-
+            //滑過效果
             $("img").hover(function() {
                 $(this).addClass("img-in");
             }, function() {
                 $(this).removeClass("img-in");
             })
+            $("#rate-header div").hover(function() {
+                $(this).addClass("img-in");
+            }, function() {
+                $(this).removeClass("img-in");
+            })
+            $("#rate-body div").hover(function() {
+                $(this).addClass("img-in text-in");
+            }, function() {
+                $(this).removeClass("img-in text-in");
+            })
+
+            //拿初始資料
+            $.ajax({
+                async: false,
+                type: "GET",
+                url: "/RD5_Assignment/core/Service.php",
+                dataType: "json",
+                success: function(data) {
+                    const exchangeRateDifference = 1.003;
+                    if (data.currency) { //如果後端回傳 json 資料有 currency
+                        USD = data.currency['USDTWD']['Exrate'].toFixed(4);
+                        JPY = (data.currency['USDJPY']['Exrate'] / data.currency['USDTWD']['Exrate']).toFixed(4);
+                        CNY = (data.currency['USDCNY']['Exrate'] / data.currency['USDTWD']['Exrate']).toFixed(4);
+                        UTC = data.currency['USDTWD']['UTC'];
+                        $("#USD-buy label").text("美金: " + USD);
+                        $("#JPY-buy label").text("日圓: " + JPY);
+                        $("#CNY-buy label").text("人民幣: " + CNY);
+                        $("#USD-sell label").text("美金: " + (USD / exchangeRateDifference).toFixed(4));
+                        $("#JPY-sell label").text("日圓: " + (JPY / exchangeRateDifference).toFixed(4));
+                        $("#CNY-sell label").text("人民幣: " + (CNY / exchangeRateDifference).toFixed(4));
+                        $("#UTC").text(UTC);
+                        console.log(data.currency);
+                    }
+                },
+                error: function(jqXHR) {
+                    console.log("get fail");
+                }
+            })
+            $("#userInfo h2").on("click", function() {
+                console.log("show money");
+                eyeIsSlash = $("#userInfo span").hasClass("fa fa-eye-slash");
+                console.log(eyeIsSlash);
+                if (!eyeIsSlash) {
+                    $.ajax({
+                        type: "GET",
+                        url: "/RD5_Assignment/core/getUserInfo.php",
+                        dataType: "json",
+                        success: function(data) {
+                            if (data.accountBalance) {
+                                $("#userInfo span").text("$" + data.accountBalance);
+                                $("#userInfo span").attr("class", "fa fa-eye-slash");
+                               
+                            }
+                        },
+                        error: function(jqXHR) {
+                            console.log("get fail");
+                        }
+                    })
+                } else {
+                    $("#userInfo span").text("存款");
+                    $("#userInfo span").attr("class", "fa fa-eye");
+                }
+
+            })
+
+            nextTab = function() {
+                $('.nav-tabs > .active').next('li').find('a').trigger('click');
+            }
 
 
-
-
-
-            // //查看明細
-            // $('.checkRecords').on('click', function() {
-            //     console.log("click");
-            //     $("#result").show();
-            //     //if($('.checkRecords').attr("value"))
-            //     console.log("test", $('.checkRecords').attr("value"));
-            //     if ($('.checkRecords').attr("value") == 1) {
-            //         $('.checkRecords').attr("value", 0);
-            //         $.ajax({
-            //             type: "POST",
-            //             url: "/RD5_Assignment/core/Service.php",
-            //             dataType: "json",
-            //             data: {
-            //                 userName: "<?= $data->name ?>",
-            //                 actionName: $(".checkRecords").attr("id")
-            //             },
-            //             success: function(data) {
-            //                 if (data.TransactionInfo) {
-            //                     console.log(data.TransactionInfo);
-            //                     doTable(data.TransactionInfo);
-            //                 }
-            //             },
-            //             error: function(jqXHR) {
-            //                 $("#actionForm")[0].reset(); //重設 ID 為 demo 的 form (表單)
-            //                 $("#result").html('<font color="#ff0000">發生錯誤：' + jqXHR.status + '</font>');
-            //                 console.log("fail");
-            //             }
-            //         })
-            //     } else {
-            //         $('.checkRecords').attr("value", 1);
-            //         $("#transactionInfoTable").empty();
-            //     }
-            // })
 
 
         })

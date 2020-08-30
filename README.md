@@ -24,3 +24,16 @@
   ### 提款操作畫面(提款金額過大)
   ![image](https://github.com/weichen-chungyo/RD5_Assignment/blob/master/viewImages/0828(1).png)
 ## TODO:禁止分頁登入,UI美化
+## 0830
+  - UI美化
+  - 查看匯率
+  - 預設屏蔽存款金額
+   ### 整體UI
+  ![image](https://github.com/weichen-chungyo/RD5_Assignment/blob/master/viewImages/0830.png)
+   ### 存款操作
+  ![image](https://github.com/weichen-chungyo/RD5_Assignment/blob/master/viewImages/0830(2).png)
+   ### 存款操作(成功)
+  ![image](https://github.com/weichen-chungyo/RD5_Assignment/blob/master/viewImages/0830(3).png)
+   ### 查看交易明細
+  ![image](https://github.com/weichen-chungyo/RD5_Assignment/blob/master/viewImages/0830(4).png)
+## TODO:禁止分頁登入 預設操作金額

@@ -13,19 +13,59 @@
 #tab-demo > ul > li.active{ border-bottom:1px solid #fff; background:#fff;}
 #tab-demo > ul > li.active a{color:rgb(30, 108, 198);}
 #tab-tr-color{background-color: #B94A48;}
+/* ======================== */
 
+#tab-info > thead >tr{background-color: white;}
+.jumbotron{padding:1rem 2rem;}
+#bank-body{background-color: #193045;}
+#bank-navs > h1{color: #FFC408;margin:1%;}
+#tabs { background-color: #193045;}
+/* ======================== */
+/*明細表*/
 .tab-deposit{background-color: #87b8d1;}
 .tab-checkRecord{background-color: #abb9c5;}
 .tab-withdraw{background-color: #FFC408;}
+/*第一欄第一列：左上*/
+tr:first-child th:first-child{
+    border-top-left-radius: 10px;
+}
+  /*第一欄最後列：左下*/
+tr:last-child td:first-child{
+    border-bottom-left-radius: 10px;
+}
+  /*最後欄第一列：右上*/
+tr:first-child th:last-child{
+    border-top-right-radius: 10px;
+}
+  /*最後欄第一列：右下*/
+tr:last-child td:last-child{
+    border-bottom-right-radius: 10px;
+  }
+#tab-info{border-collapse: initial;}
+/* ======================== */
 
+/*圖片操作區*/
+#div-img-action div{ border-radius:30px;}
 .img-in{box-shadow: 0px 0px 15px #193045 ;}
-#bank-body{background-color: #193045;}
-#bank-navs > h1{color: #FFC408;}
-#tabs {background-color: #193045;}
-#div-img-action div{border-radius:30px;}
-/* #div-img-action > h3 > div > div > div > div > img{border-radius:30px;} */
-#tab-info > thead >tr{background-color: white;}
-.jumbotron{padding:1rem 2rem;}
+.text-in{text-shadow: 1px 0px 0px #366a9b ;}
+#headerUl a{color:#FFC408;}
+#headerUl a.active{color:#193045;}
+/* ======================== */
+/*匯率*/
+#rate-header div{width: 100%;border-color: #193045;background-color: #193045; border-style: solid;margin: 1%; padding:1%}
+#rate-header label{margin:0;color: #FFC408;font-weight:bold;}
+#rate-body div{border-color: #193045; border-style: solid;border-radius:30px;margin: 1%; padding:1%}
+#rate-body label{margin:0;color: #193045;font-weight:bold;}
+#rate-body [id =rate-header] label{color: #FFC408;font-weight:bold;}
+#rate-body [id =rate-header] {background-color: #193045;}
+#rate-footer div{width: 100%;border-color: #193045;background-color: white; border-style: solid;margin: 1%; padding:1%; font-weight:bold;color:#193045;}
+#rate-footer label{margin:0;}
+/* ======================== */
+
+/**/
+#description {border-style: solid; box-shadow:1px 2px 2px  #193045;}
+
+#action-title h5{box-shadow:1px 2px 2px 1px #0c1f31; width: 100%;border-color: #193045;background-color: #193045; border-style: solid;color:#FFC408;margin: 1%; padding:1%}
 /* #tabs > div {background-color: #193045;} */
 /* #FFC408  005CAF*/
 .body-color{
