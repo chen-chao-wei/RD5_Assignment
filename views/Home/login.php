@@ -9,9 +9,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="css/bootstrap.min.css" rel="stylesheet">
-  <link href="css/jquery.toast.css" rel="stylesheet">
-  <link href="../css/style.css" rel="stylesheet">
+  <link href="/RD5_Assignment/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/RD5_Assignment/css/jquery.toast.css" rel="stylesheet">
+  <link href="/RD5_Assignment/css/style.css" rel="stylesheet">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
@@ -113,9 +113,9 @@
 
   </div>
 
-  <script src="js/jquery.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="js/jquery.toast.js"></script>
+  <script src="/RD5_Assignment/js/jquery.js"></script>
+  <script src="/RD5_Assignment/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/RD5_Assignment/js/jquery.toast.js"></script>
 
   <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 

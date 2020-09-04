@@ -44,7 +44,7 @@ class HomeController extends Controller
             
             unset($_SESSION['userName']);
             $this->Redirect("login");
-            echo ("123r");
+           
         }
         
         
@@ -97,7 +97,7 @@ class HomeController extends Controller
         } else {
             
             $user->flag = true;
-            $this->view("Home/login", $user);
+            $this->view("Home/login", $user);            
             exit();
         }
               
