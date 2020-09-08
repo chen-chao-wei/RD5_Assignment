@@ -189,9 +189,9 @@
         </div>
     </div>
     <!-------------------- MODAL   END ------------------------>
-    <script src="../js/jquery.js"></script>
-    <script src="../js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="../js/jquery.toast.js"></script>
+    <script src="/RD5_Assignment/js/jquery.js"></script>
+    <script src="/RD5_Assignment/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/RD5_Assignment/js/jquery.toast.js"></script>
 
     <script>
         //登出確認 
@@ -272,34 +272,7 @@
                         $("#result").html('<font color="#ff0000">發生錯誤：' + jqXHR.status + '</font>');
                         console.log("fail");
                     }
-                })
-                // if ($('.checkRecords').attr("value") == 1) {
-                //     $('.checkRecords').attr("value", 0);
-                //     $.ajax({
-                //         type: "POST",
-                //         url: "/RD5_Assignment/core/Service.php",
-                //         dataType: "json",
-                //         data: {
-                //             userName: "<?= $data->name ?>",
-                //             actionName: $(".checkRecords").attr("id")
-                //         },
-                //         success: function(data) {
-                //             if (data.TransactionInfo) {
-                //                 console.log(data.TransactionInfo);
-                //                 doTable(data.TransactionInfo);
-                //             }
-                //         },
-                //         error: function(jqXHR) {
-                //             $("#actionForm")[0].reset();
-                //             $("#result").html('<font color="#ff0000">發生錯誤：' + jqXHR.status + '</font>');
-                //             console.log("fail");
-                //         }
-                //     })
-                // } else {
-                //     $('.checkRecords').attr("value", 1);
-                //     $("#transactionInfoTable").empty();
-                // }
-
+                })       
 
             });
             //跑進度條
@@ -356,13 +329,16 @@
                                 $("#check").attr("disabled", false);
                                 $("#check").text("完成");
                                 alert(data.info['actionName'] + " $" + data.info['amount'] + " 【" + data.info['status'] + "】");
-                                console.log("succ");
-                                console.log(data);
+                                //console.log("succ");
+                                //console.log(data);
                             })
-
                         } else { //否則讀取後端回傳 json 資料 errorMsg 顯示錯誤訊息
                             $("#actionForm")[0].reset(); //重設 ID 為 demo 的 form (表單)
-                            $("#result").html('<font color="#ff0000">' + data.errorMsg + '</font>');
+                            if(data.errorMsg){
+                                $("#result").html('<font color="#ff0000">' + data.errorMsg + '</font>');
+                            }else{
+                                $("#result").html('<font color="#ff0000">' + data.info['errorMsg'] + '</font>');
+                            }                            
                             $("#check").attr("onclick", "actionComplete()")
                             $("#check").attr("disabled", false);
                             $("#amount").attr("disabled", false);
@@ -450,10 +426,12 @@
                         url: "/RD5_Assignment/core/getUserInfo.php",
                         dataType: "json",
                         success: function(data) {
-                            if (data.accountBalance) {
+                            if (data.accountBalance>=0) {
                                 $("#userInfo span").text("$" + data.accountBalance);
                                 $("#userInfo span").attr("class", "fa fa-eye-slash");
                                
+                            }else{
+                                console.log(data.accountBalance);    
                             }
                         },
                         error: function(jqXHR) {

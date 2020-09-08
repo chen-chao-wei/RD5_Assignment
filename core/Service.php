@@ -8,6 +8,7 @@ class transactionInfo
     var $actionName;
     var $status;
     var $accountBalance;
+    var $errorMsg;
     function __construct($userName, $actionName, $amount)
     {
         $this->userName = $userName;
@@ -45,7 +46,7 @@ function setDeposit($userName, $actionName, $amount)
         return $th;
     }
 }
-function setWithdraw($userName, $actionName, $amount)
+function setWithdraw($userName, &$actionName, $amount)
 {
     $tableName = array("users");
     $fieldName = array("money", "id");
@@ -59,7 +60,9 @@ function setWithdraw($userName, $actionName, $amount)
         //提款金額 大於 存款
         if ($amount > $accountBalance[0]['money']) {
             $info->accountBalance = $accountBalance[0]['money'];
+            $actionName = null;
             $info->status = "ERROR:帳戶金額不足";
+            $info->errorMsg = "ERROR:帳戶金額不足";
             $sqlInsertInfo = <<<block
                 insert into userTransactionInfo (id,account,actionName,amount,status,accountBalance)
                 values({$accountBalance[0]['id']},'$info->userName','$info->actionName','$info->amount','$info->status','$info->accountBalance');
@@ -142,7 +145,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") { //如果是 POST 請求
     @$userName = $_POST["userName"];
     @$actionName = $_POST["actionName"]; //取得 nickname POST 值
     @$amount = $_POST["amount"]; //取得 gender POST 值
-    if ($actionName != null && $amount != null) { //如果 nickname 和 gender 都有填寫
+    if ($actionName != null && $amount > 0) { //如果 nickname 和 gender 都有填寫
         $info = new transactionInfo($userName, $actionName, $amount);
         switch ($actionName) {
             case 'withdraw':

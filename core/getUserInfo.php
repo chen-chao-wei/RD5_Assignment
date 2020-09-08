@@ -84,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") { //如果是 POST 請求
 } elseif ($_SERVER['REQUEST_METHOD'] == "GET") {
 
     $result = getTransactionInfo($_SESSION['userName'], "sys", false);
-    if ($result) {
+    if ($result>=0) {
         echo json_encode(array(
             'accountBalance' => $result
         ));

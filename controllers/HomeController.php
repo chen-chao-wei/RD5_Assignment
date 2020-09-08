@@ -83,10 +83,10 @@ class HomeController extends Controller
             if ($user->loginVerify($userName, $userPass)) {                
                 $sUserName = $_POST["account"];
                 if (trim($sUserName) != "") {
-                    $_SESSION["userName"] = $sUserName;
-                    
-                }                
-                $this->Redirect("hello",$user);
+                    $_SESSION["userName"] = $sUserName;                    
+                }      
+                $user->name = $sUserName; 
+                $this->view("Home/hello", $user);
                 exit();
             } else {          
                 echo '<script>alert("帳號或密碼錯誤")</script>';      
