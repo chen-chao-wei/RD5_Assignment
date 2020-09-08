@@ -11,7 +11,7 @@
     <link href="/RD5_Assignment/css/jquery.toast.css" rel="stylesheet">
     <link href="/RD5_Assignment/css/style.css" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <title>Lab</title>
+    <title>bank</title>
 </head>
 
 <body>
@@ -194,6 +194,34 @@
     <script type="text/javascript" src="/RD5_Assignment/js/jquery.toast.js"></script>
 
     <script>
+        window.alert = function(name) {
+            var iframe = document.createElement("IFRAME");
+            iframe.style.display = "none";
+            iframe.setAttribute("src", 'data:text/plain,');
+            document.documentElement.appendChild(iframe);
+            window.frames[0].window.alert(name);
+            iframe.parentNode.removeChild(iframe);
+        }
+
+        var wConfirm = window.confirm;
+        window.confirm = function(message) {
+            try {
+                var iframe = document.createElement("IFRAME");
+                iframe.style.display = "none";
+                iframe.setAttribute("src", 'data:text/plain,');
+                document.documentElement.appendChild(iframe);
+                var alertFrame = window.frames[0];
+                var iwindow = alertFrame.window;
+                if (iwindow == undefined) {
+                    iwindow = alertFrame.contentWindow;
+                }
+                var result = iwindow.confirm(message);
+                iframe.parentNode.removeChild(iframe);
+                return result;
+            } catch (exc) {
+                return wConfirm(message);
+            }
+        }
         //登出確認 
         function checkOut() {
             var yes = confirm('你確定要登出嗎？');
